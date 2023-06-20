@@ -3,7 +3,7 @@ import User from "../models/Users.js"
 
 export const login = async (req, res) => {
   try {
-    res.send({ sucess: true, user: req.user })
+    res.send({ sucess: true })
   } catch (error) {}
 }
 

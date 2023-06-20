@@ -4,6 +4,7 @@ import "dotenv/config"
 import passport from "passport"
 import mongoose from "mongoose"
 import session from "express-session"
+import MongoStore from "connect-mongo"
 
 import UserRoute from "./routes/User.js"
 import { auth, serialize } from "./middlewares/authPassport.js"
@@ -16,10 +17,11 @@ mongoose.connect(BDD_URI)
 const app = express()
 app.use(
   session({
-    secret: "keyboard cat",
+    name: "simple",
+    secret: "auth",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true },
+    store: MongoStore.create({ mongoUrl: BDD_URI }),
   })
 )
 
