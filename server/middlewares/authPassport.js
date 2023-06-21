@@ -5,12 +5,14 @@ import { verify } from "argon2"
 
 export const localAuth = () => {
   return new LocalStrategy(async (username, password, done) => {
-    const user = await User.findOne({ username })
+    const user = await User.findOne({ email: username })
     try {
       if (!user) return done(null, false)
+
       const verifyPassword = await verify(user.password, password, {
         hash: process.env.SALT,
       })
+
       if (password && !verifyPassword) return done(null, false)
 
       return done(null, user)
