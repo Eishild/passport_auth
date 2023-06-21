@@ -38,4 +38,5 @@ export const register = async (req, res) => {
 
 export const logout = (req, res) => {
   req.session.destroy((err) => console.log("logout"))
+  res.send("session delete")
 }

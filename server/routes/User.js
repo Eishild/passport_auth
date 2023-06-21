@@ -19,6 +19,6 @@ router.get(
 router.get("/auth/facebook/callback", loginFacebook)
 
 router.post("/register", register)
-router.post("/logout", logout)
+router.get("/logout", logout)
 
 export default router

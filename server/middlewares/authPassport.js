@@ -49,6 +49,6 @@ export const facebookAuth = () => {
 
 export const serialize = () => {
   return function (user, cb) {
-    cb(null, user.get("_id"))
+    cb(null, user.get("id"))
   }
 }
