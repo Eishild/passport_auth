@@ -7,7 +7,11 @@ import session from "express-session"
 import MongoStore from "connect-mongo"
 
 import UserRoute from "./routes/User.js"
-import { auth, serialize } from "./middlewares/authPassport.js"
+import {
+  facebookAuth,
+  localAuth,
+  serialize,
+} from "./middlewares/authPassport.js"
 
 const PORT = process.env.PORT
 const BDD_URI = process.env.MONGO_URI
@@ -29,7 +33,8 @@ app.use(express())
 app.use(cors())
 app.use(express.json())
 
-passport.use(auth())
+passport.use(localAuth())
+passport.use(facebookAuth())
 passport.serializeUser(serialize())
 
 app.use("/", UserRoute)

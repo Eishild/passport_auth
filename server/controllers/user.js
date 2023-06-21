@@ -1,9 +1,14 @@
-import argon2, { hash } from "argon2"
+import { hash } from "argon2"
 import User from "../models/Users.js"
 
 export const login = async (req, res) => {
   try {
     res.send({ sucess: true })
+  } catch (error) {}
+}
+export const loginFacebook = async (req, res) => {
+  try {
+    res.send({ sessionID: req.sessionID, sucess: true })
   } catch (error) {}
 }
 
@@ -16,18 +21,21 @@ export const register = async (req, res) => {
       return res.send({ err: "register error" })
     }
     const hashPassword = await hash(password, {
-      salt: process.env.SALT,
-      type: argon2.argon2i,
+      hash: process.env.SALT,
     })
-    const user = new User({
+
+    const newUser = new User({
       username,
       email,
       password: hashPassword,
     })
-
-    await user.save()
+    await newUser.save()
     res.send({ sucess: true })
   } catch (error) {
     console.log(error)
   }
+}
+
+export const logout = (req, res) => {
+  req.session.destroy((err) => console.log("logout"))
 }
