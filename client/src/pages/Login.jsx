@@ -21,6 +21,10 @@ export const Login = (props) => {
     setPassword("")
   }
 
+  const handleLoginFacebook = async () => {
+    window.location = "http://localhost:3001/login/facebook"
+  }
+
   return (
     <>
       <div className="login-container">
@@ -60,16 +64,16 @@ export const Login = (props) => {
           <div className="center">Ou</div>
           <div className="center">
             Connectez vous avec
-            <button className="logo-button">
-              <Link to={"/register"}>
-                <img
-                  className="logo"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/240px-Facebook_logo_%28square%29.png"
-                  alt="facebbok logo"
-                  width="25px"
-                  height="25px"
-                />
-              </Link>
+            <button className="logo-button" onClick={handleLoginFacebook}>
+              {/* <Link to={"http://localhost:3001/login/facebook"}> */}
+              <img
+                className="logo"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/240px-Facebook_logo_%28square%29.png"
+                alt="facebbok logo"
+                width="25px"
+                height="25px"
+              />
+              {/* </Link> */}
             </button>
           </div>
         </div>

@@ -12,10 +12,7 @@ router.post(
   }),
   login
 )
-router.get(
-  "/login/facebook",
-  passport.authenticate("facebook", { failureRedirect: "/login" })
-)
+router.get("/login/facebook", passport.authenticate("facebook"))
 router.get("/auth/facebook/callback", loginFacebook)
 
 router.post("/register", register)

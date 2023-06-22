@@ -19,6 +19,11 @@ const BDD_URI = process.env.MONGO_URI
 mongoose.connect(BDD_URI)
 
 const app = express()
+app.all("/*", function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  next()
+})
+app.use(cors())
 app.use(
   session({
     name: "simple",
@@ -30,7 +35,6 @@ app.use(
 )
 
 app.use(express())
-app.use(cors())
 app.use(express.json())
 
 passport.use(localAuth())

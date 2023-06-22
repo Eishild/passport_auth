@@ -7,9 +7,7 @@ export const login = async (req, res) => {
   } catch (error) {}
 }
 export const loginFacebook = async (req, res) => {
-  try {
-    res.send({ sessionID: req.sessionID, sucess: true })
-  } catch (error) {}
+  res.send({ sessionID: req.sessionID, sucess: true })
 }
 
 export const register = async (req, res) => {
