@@ -1,27 +1,7 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Form, Link, redirect, useNavigate } from "react-router-dom"
 import axios from "axios"
 
-export const Login = (props) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-
-  const navigate = useNavigate()
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const response = await axios.post("http://localhost:3001/login", {
-      username: email,
-      password,
-    })
-    console.log(response.data)
-    setEmail("")
-    setPassword("")
-    if (response.data.sucess) {
-      navigate("/")
-    }
-  }
-
+export const Login = () => {
   const handleLoginFacebook = async () => {
     window.location = "http://localhost:3001/login/facebook"
   }
@@ -30,12 +10,10 @@ export const Login = (props) => {
     <>
       <div className="login-container">
         <h1>Se connecter</h1>
-        <form className="form-login" onSubmit={handleSubmit}>
+        <Form className="form-login" method="POST" action="/connection/login">
           <input
             type="email"
             placeholder="Adresse e-mail"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
             name="email"
             id="email"
             required
@@ -45,19 +23,19 @@ export const Login = (props) => {
             type="password"
             placeholder="Mot de passe"
             name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="off"
           />
           <div>
-            <button className="button">Se connecter</button>
+            <button className="button" type="submit">
+              Se connecter
+            </button>
           </div>
-        </form>
+        </Form>
         <div className="container-signin">
           <p>
             Vous n'êtes pas enregistré ?{" "}
-            <Link to={"/register"}>Enregistrez vous!</Link>.
+            <Link to={"/connection/register"}>Enregistrez vous!</Link>.
           </p>
         </div>
         <hr />
@@ -81,4 +59,21 @@ export const Login = (props) => {
       </div>
     </>
   )
+}
+
+export const loginAction = async ({ request }) => {
+  const formData = await request.formData()
+  const loginForm = {
+    username: formData.get("email"),
+    password: formData.get("password"),
+  }
+  try {
+    const { data } = await axios.post("http://localhost:3001/login", loginForm)
+
+    localStorage.setItem("auth", data.success)
+    localStorage.setItem("userID", data.userID)
+    return redirect("/")
+  } catch ({ response }) {
+    return { error: response.data }
+  }
 }

@@ -29,11 +29,16 @@ app.all("/*", function (req, res, next) {
 app.use(cors())
 app.use(
   session({
-    name: "simple",
+    name: "session",
     secret: "auth",
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: BDD_URI }),
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      maxAge: 180 * 60 * 1000,
+    },
   })
 )
 

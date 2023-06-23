@@ -26,11 +26,14 @@ export const createComment = async (req, res) => {
 
 export const commentByUser = async (req, res) => {
   try {
-    const { userID } = req.body
+    const { userID } = req.params
+    console.log(userID)
 
     const comments = await Comments.find({
       User: userID,
     })
+      .populate({ path: "User", select: "username" })
+      .exec()
 
     if (comments.length === 0)
       return res.send("No comments found for this user")
