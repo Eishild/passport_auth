@@ -8,7 +8,7 @@ import {
 const router = express.Router()
 
 router.post("/create/:id", createComment)
-router.post("/user", commentByUser)
+router.get("/user/:userID", commentByUser)
 router.post("/update/:id", updateComment)
 
 export default router

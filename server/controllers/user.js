@@ -3,11 +3,13 @@ import User from "../models/User.js"
 
 export const login = async (req, res) => {
   try {
-    res.send({ sucess: true })
+    req.session.auth = true
+    console.log(req.session.passport.user)
+    res.send({ success: true, userID: String(req.session.passport.user) })
   } catch (error) {}
 }
 export const loginFacebook = async (req, res) => {
-  res.send({ sessionID: req.sessionID, sucess: true })
+  res.send({ sessionID: req.sessionID, success: true })
 }
 
 export const register = async (req, res) => {
@@ -28,13 +30,13 @@ export const register = async (req, res) => {
       password: hashPassword,
     })
     await newUser.save()
-    res.send({ sucess: true })
+    res.send({ success: true })
   } catch (error) {
     console.log(error)
   }
 }
 
 export const logout = (req, res) => {
-  req.session.destroy((err) => console.log("logout"))
+  req.session.destroy()
   res.send("session delete")
 }
