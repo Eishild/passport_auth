@@ -11,7 +11,6 @@ export const Navigation = (props) => {
             <li>Connection</li>
           </Link>
           <Link to="register">
-            {" "}
             <li>Enregistrement</li>
           </Link>
         </ul>

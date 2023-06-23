@@ -3,13 +3,14 @@ import Users from "../models/User.js"
 
 export const getAllPosts = async (req, res) => {
   try {
-    const allPosts = await BlogPosts.find({})
-    const posts = allPosts.map((post) => post._id)
-    const users = await Users.find({
-      BlogPosts: {
-        $in: posts,
+    const allPosts = await BlogPosts.find({}).populate([
+      { path: "User", select: "username" },
+      {
+        path: "Comments",
+        populate: { path: "User", select: "username" },
       },
-    })
+    ])
+
     res.send(allPosts)
   } catch (error) {
     res.send(error)
@@ -34,7 +35,7 @@ export const createPost = async (req, res) => {
       res.send("User not found")
     }
 
-    const newBlogPost = new BlogPosts({ title, content })
+    const newBlogPost = new BlogPosts({ title, content, User: userID })
 
     await Users.findByIdAndUpdate(userID, {
       $push: {

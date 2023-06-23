@@ -3,6 +3,10 @@ import { Schema, model } from "mongoose"
 const BlogPostsSchema = Schema({
   title: String,
   content: String,
+  User: {
+    type: Schema.Types.ObjectId,
+    ref: "Users",
+  },
   Comments: [
     {
       type: Schema.Types.ObjectId,
