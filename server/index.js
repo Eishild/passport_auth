@@ -7,6 +7,9 @@ import session from "express-session"
 import MongoStore from "connect-mongo"
 
 import UserRoute from "./routes/User.js"
+import BlogPostsRoute from "./routes/BlogPosts.js"
+import Comments from "./routes/Comments.js"
+
 import {
   facebookAuth,
   localAuth,
@@ -42,5 +45,7 @@ passport.use(facebookAuth())
 passport.serializeUser(serialize())
 
 app.use("/", UserRoute)
+app.use("/blogpost", BlogPostsRoute)
+app.use("/comment", Comments)
 
 app.listen(PORT, () => console.log(`Server run on port : ${PORT}`))

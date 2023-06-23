@@ -1,6 +1,6 @@
 import LocalStrategy from "passport-local"
 import FacebookStrategy from "passport-facebook"
-import User from "../models/Users.js"
+import User from "../models/User.js"
 import { verify } from "argon2"
 
 export const localAuth = () => {
@@ -32,7 +32,7 @@ export const facebookAuth = () => {
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log("accessToken", accessToken)
+        // console.log("accessToken", accessToken)
         console.log("profile", profile)
         // const user = await User.findOne({ username: profile.id }).exec()
         // if (!user) {
@@ -51,6 +51,7 @@ export const facebookAuth = () => {
 
 export const serialize = () => {
   return function (user, cb) {
-    cb(null, user.get("id"))
+    console.log("seri user", user)
+    cb(null, user)
   }
 }

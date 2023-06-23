@@ -1,24 +1,25 @@
 import { useState } from "react"
-import { Link, redirect } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 
 export const Login = (props) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
+  const navigate = useNavigate()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(email, password)
     const response = await axios.post("http://localhost:3001/login", {
       username: email,
       password,
     })
-
-    if (response?.data?.isRegistered) {
-      redirect("/")
-    }
+    console.log(response.data)
     setEmail("")
     setPassword("")
+    if (response.data.sucess) {
+      navigate("/")
+    }
   }
 
   const handleLoginFacebook = async () => {

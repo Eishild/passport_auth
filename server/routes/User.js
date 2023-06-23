@@ -13,7 +13,13 @@ router.post(
   login
 )
 router.get("/login/facebook", passport.authenticate("facebook"))
-router.get("/auth/facebook/callback", loginFacebook)
+router.get(
+  "/auth/facebook/callback",
+  passport.authenticate("facebook", {
+    failureRedirect: "/login",
+  }),
+  (req, res) => res.send({ session: req.sessionID })
+)
 
 router.post("/register", register)
 router.get("/logout", logout)
